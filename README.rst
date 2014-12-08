@@ -8,7 +8,7 @@ synapse-like structures associated with closed segmented paths (e.g.,
 postsynaptic densities in dendritic spines). It is of course also possible 
 to use the tool for other types of two-dimensional spatial point patterns.
 
-PointDensitySyn.IJ is used in conjunction with its companion ImageJ plugin,
+PointDensitySyn.IJ is used in conjunction with its companion Python component,
 PointDensitySyn.py.
 
 Please see the `website <http://www.hu.liu.se/forskning/larsson-max/software>`_ 
