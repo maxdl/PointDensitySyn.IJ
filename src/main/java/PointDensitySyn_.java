@@ -83,7 +83,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
         panel.add(new Label(""));
         panel.add(new Label("Define selection as:"));   
         addButton("Plasma membrane");
-        addButton("PSD / active zone");
+        addButton("Postsynaptic density");
         addButton("Points");
         addButton("Hole");
         panel.add(new Label(""));
@@ -91,7 +91,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
         panel.add(new Label(""));
         panel.add(new Label("Delete profile components:"));
         addButton("Delete plasma membrane");
-        addButton("Delete PSD / active zone");
+        addButton("Delete postsynaptic density");
         addButton("Delete points");
         addButton("Delete random points");
         addButton("Delete selected component");
@@ -122,7 +122,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
         addStaticInfoLabel("Plasma membrane nodes:");
         pathnLabel = new Label("0", Label.RIGHT);
         addVarInfoLabel(pathnLabel);
-        addStaticInfoLabel("PSDs/active zones:");
+        addStaticInfoLabel("Postsynaptic densities:");
         psdnLabel = new Label("0", Label.RIGHT);
         addVarInfoLabel(psdnLabel);
         addStaticInfoLabel("Holes:");
@@ -266,7 +266,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
             }
             if (profile.dirty) {
                 YesNoCancelDialog d = new YesNoCancelDialog(imp.getWindow(),
-                        "PointDensity", "Save current\nprofile?");
+                        "PointDensitySyn", "Save current\nprofile?");
                 if (d.yesPressed()) {
                     profile.dirty = !profile.save(imp);
                 } else if (!d.cancelPressed()) {
@@ -302,7 +302,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
                 profile.dirty = true;
             }
         }
-        if (command.equals("PSD / active zone")) {
+        if (command.equals("Postsynaptic density")) {
             if (!isImage(imp) || !profile.isSameImage(imp)) {
                 return;
             }
@@ -348,7 +348,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
             }
             profile.deleteNamedComponent(imp, "plasma membrane");
         }
-        if (command.equals("Delete PSD / active zone")) {
+        if (command.equals("Delete postsynaptic density")) {
             if (!isImage(imp) || !profile.isSameImage(imp)) {
                 return;
             }
@@ -620,7 +620,7 @@ class ProfileDataPDS implements OptionsPDS {
             outf.println("END");
             for (n = 0; n < this.overlay.size(); n++) {
                 if (this.overlay.get(n).getName().equals("psd")) {
-                    outf.println("PSD_OR_ACTIVE_ZONE");
+                    outf.println("POSTSYNAPTIC_DENSITY");
                     pol = this.overlay.get(n).getPolygon();
                     for (i = 0; i < pol.npoints; i++)
                         outf.println("  " + IJ.d2s(pol.xpoints[i], 0) + ", " + IJ.d2s(pol.ypoints[i], 0));
