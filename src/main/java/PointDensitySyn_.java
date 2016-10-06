@@ -26,10 +26,10 @@ import ij.measure.*;
 interface VersionPDS {
     String title = "PointDensitySyn";
     String author = "Max Larsson";
-    String version = "1.0pre9";
+    String version = "1.0";
     String year = "2016";
-    String month = "May";
-    String day = "16";
+    String month = "October";
+    String day = "6";
     String email = "max.larsson@liu.se";
     String homepage = "http://www.hu.liu.se/forskning/larsson-max/software";
 }    
@@ -201,7 +201,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
 
         profile_nLabel.setText(IJ.d2s(profile.ntot, 0));
         pnLabel.setText(IJ.d2s(profile.getNumPoints("points"), 0));
-        pathnLabel.setText(IJ.d2s(profile.getNumPoints("profile border"), 0));
+        pathnLabel.setText(IJ.d2s(profile.getNumPoints("plasma membrane"), 0));
         psdnLabel.setText(IJ.d2s(profile.getNum("psd"), 0));
         holenLabel.setText(IJ.d2s(profile.getNum("hole"), 0));
         if (profile.overlay.getIndex("random points") != -1) {
@@ -556,7 +556,7 @@ class ProfileDataPDS implements OptionsPDS {
 
 
     public boolean save(ImagePlus imp) {
-        int i;
+        int i, j;
         double pixelwidth;
         String s, unit;
         Polygon pol;
@@ -618,19 +618,19 @@ class ProfileDataPDS implements OptionsPDS {
                 outf.println("  " + IJ.d2s(pol.xpoints[i], 0) + ", "+ IJ.d2s(pol.ypoints[i], 0));
             }
             outf.println("END");
-            for (n = 0; n < this.overlay.size(); n++) {
-                if (this.overlay.get(n).getName().equals("psd")) {
+            for (j = 0; j < this.overlay.size(); j++) {
+                if (this.overlay.get(j).getName().equals("psd")) {
                     outf.println("POSTSYNAPTIC_DENSITY");
-                    pol = this.overlay.get(n).getPolygon();
+                    pol = this.overlay.get(j).getPolygon();
                     for (i = 0; i < pol.npoints; i++)
                         outf.println("  " + IJ.d2s(pol.xpoints[i], 0) + ", " + IJ.d2s(pol.ypoints[i], 0));
                     outf.println("END");
                 }
             }
-            for (n = 0; n < this.overlay.size(); n++) {
-                if (this.overlay.get(n).getName().equals("hole")) {
+            for (j = 0; j < this.overlay.size(); j++) {
+                if (this.overlay.get(j).getName().equals("hole")) {
                     outf.println("HOLE");
-                    pol = this.overlay.get(n).getPolygon();
+                    pol = this.overlay.get(j).getPolygon();
                     for (i = 0; i < pol.npoints; i++)
                         outf.println("  " + IJ.d2s(pol.xpoints[i], 0) + ", "+ IJ.d2s(pol.ypoints[i], 0));
                     outf.println("END");
