@@ -209,13 +209,15 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
         } else {
             randomPlacedLabel.setText("no");
         }
-        Calibration c = imp.getCalibration();
-        if (c.getUnit().equals("micron")) {
-            pixelwidth = c.pixelWidth * 1000;
-            unit = "nm";
-        } else {
-            pixelwidth = c.pixelWidth;
-            unit = c.getUnit();
+        if (imp != null) {
+            Calibration c = imp.getCalibration();
+            if (c.getUnit().equals("micron")) {
+                pixelwidth = c.pixelWidth * 1000;
+                unit = "nm";
+            } else {
+                pixelwidth = c.pixelWidth;
+                unit = c.getUnit();
+            }
         }
         scaleLabel.setText(IJ.d2s(pixelwidth, 2) + " " + unit);
         commentLabel.setText(profile.comment);
@@ -243,7 +245,6 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
             return;
         }
         imp = WindowManager.getCurrentImage();
-        imp.setOverlay(profile.overlay);
         if (imp != null && imp.getType() != ImagePlus.COLOR_RGB) {
             imp.setProcessor(imp.getTitle(), imp.getProcessor().convertToRGB());
         }
@@ -286,6 +287,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
             if ((p = getPointRoi(imp)) != null) {
                 p.setName("points");
                 p.setStrokeColor(pointCol);
+                imp.setOverlay(profile.overlay);
                 profile.overlay.add(p);
                 profile.dirty = true;
             }
@@ -298,6 +300,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
             if ((p = getPolygonRoi(imp)) != null) {
                 p.setName("plasma membrane");
                 p.setStrokeColor(pathCol);
+                imp.setOverlay(profile.overlay);
                 profile.overlay.add(p);
                 profile.dirty = true;
             }
@@ -309,6 +312,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
             if ((p = getPolylineRoi(imp)) != null) {
                 p.setName("psd");
                 p.setStrokeColor(psdCol);
+                imp.setOverlay(profile.overlay);
                 profile.overlay.add(p);
                 profile.dirty = true;
             }
@@ -320,6 +324,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
             if ((p = getPolygonRoi(imp)) != null) {
                 p.setName("hole");
                 p.setStrokeColor(holeCol);
+                imp.setOverlay(profile.overlay);
                 profile.overlay.add(p);
                 profile.dirty = true;
             }
@@ -340,6 +345,7 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
             randomRoi.setHideLabels(true);
             randomRoi.setName("random points");
             randomRoi.setStrokeColor(randomCol);
+            imp.setOverlay(profile.overlay);
             profile.overlay.add(randomRoi);
         }
         if (command.equals("Delete plasma membrane")) {
