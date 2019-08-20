@@ -218,8 +218,8 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
                 pixelwidth = c.pixelWidth;
                 unit = c.getUnit();
             }
+            scaleLabel.setText(IJ.d2s(pixelwidth, 2) + " " + unit);
         }
-        scaleLabel.setText(IJ.d2s(pixelwidth, 2) + " " + unit);
         commentLabel.setText(profile.comment);
     }
 
@@ -424,7 +424,9 @@ public class PointDensitySyn_ extends PlugInFrame implements OptionsPDS,
             new HTMLDialog(VersionPDS.title, aboutHtml);
         }
         updateInfoPanel();
-        imp.updateAndDraw();
+        if (imp != null) {
+            imp.updateAndDraw();
+        }
         IJ.showStatus("");
     }
 
